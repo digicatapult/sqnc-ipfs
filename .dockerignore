@@ -4,6 +4,7 @@ coverage
 node_modules
 scripts
 test
+data
 
 .eslintignore
 .eslintrc

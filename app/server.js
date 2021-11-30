@@ -10,6 +10,7 @@ async function createHttpServer() {
   const app = express()
   const requestLogger = pinoHttp({ logger })
   const ipfs = await setupIpfs()
+
   await setupKeyWatcher({
     onUpdate: async (value) => {
       await ipfs.stop()
@@ -37,17 +38,18 @@ async function createHttpServer() {
     }
   })
 
-  return { app }
+  return { app, ipfs }
 }
 
 /* istanbul ignore next */
 async function startServer() {
   try {
-    const { app } = await createHttpServer()
+    const { app, ipfs } = await createHttpServer()
 
     const setupGracefulExit = ({ sigName, server, exitCode }) => {
       process.on(sigName, async () => {
-        server.close(() => {
+        server.close(async () => {
+          await ipfs.stop()
           process.exit(exitCode)
         })
       })
