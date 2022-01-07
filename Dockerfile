@@ -15,5 +15,7 @@ WORKDIR /vitalam-ipfs
 COPY . .
 RUN npm install --production
 
+ENV IPFS_PATH=/ipfs
+
 EXPOSE 80
 CMD ["node", "./app/index.js"]

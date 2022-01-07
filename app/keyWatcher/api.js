@@ -10,17 +10,23 @@ const apiOptions = {
     PeerId: 'Vec<u8>',
     Key: 'Vec<u8>',
     TokenId: 'u128',
+    RoleKey: 'Role',
     TokenMetadataKey: `[u8; ${METADATA_KEY_LENGTH}]`,
     TokenMetadataValue: 'MetadataValue',
     Token: {
       id: 'TokenId',
-      owner: 'AccountId',
+      roles: 'BTreeMap<RoleKey, AccountId>',
       creator: 'AccountId',
       created_at: 'BlockNumber',
       destroyed_at: 'Option<BlockNumber>',
       metadata: 'BTreeMap<TokenMetadataKey, TokenMetadataValue>',
       parents: 'Vec<TokenId>',
       children: 'Option<Vec<TokenId>>',
+    },
+    Output: {
+      roles: 'BTreeMap<RoleKey, AccountId>',
+      metadata: 'BTreeMap<TokenMetadataKey, TokenMetadataValue>',
+      parent_index: 'Option<u32>',
     },
     MetadataValue: {
       _enum: {
@@ -29,12 +35,16 @@ const apiOptions = {
         None: null,
       },
     },
+    Role: {
+      _enum: ['Admin', 'ManufacturingEngineer', 'ProcurementBuyer', 'ProcurementPlanner', 'Supplier'],
+    },
   },
 }
 
 const createNodeApi = async () => {
   const api = await ApiPromise.create(apiOptions)
   return {
+    _api: api,
     isEventKeyUpdate: (event) => api.events.ipfsKey.UpdateKey.is(event),
     getCurrentKey: async () => await api.query.ipfsKey.key(),
     setupEventProcessor: (eventProcessor) => api.query.system.events(eventProcessor),

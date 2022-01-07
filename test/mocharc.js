@@ -1,7 +1,7 @@
 module.exports = {
   recursive: true,
-  slow: 30000,
-  timeout: 60000,
+  slow: 10000,
+  timeout: 20000,
   extension: ['.test.js'],
   require: ['./test/integration/fixtures.js'],
   exit: true,

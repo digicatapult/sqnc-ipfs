@@ -7,6 +7,14 @@ if (process.env.NODE_ENV === 'test') {
   dotenv.config({ path: 'test/test.env' })
 }
 
+const validateArgs = envalid.makeValidator((input) => {
+  const parsed = JSON.parse(input)
+  if (!Array.isArray(parsed) || parsed.some((arg) => arg !== `${arg}`)) {
+    throw new Error('Invalid argument array %s', input)
+  }
+  return parsed
+})
+
 const vars = envalid.cleanEnv(
   process.env,
   {
@@ -15,11 +23,10 @@ const vars = envalid.cleanEnv(
     PORT: envalid.port({ default: 80, devDefault: 3000 }),
     NODE_HOST: envalid.host({ devDefault: 'localhost' }),
     NODE_PORT: envalid.port({ default: 9944 }),
-    IPFS_CONFIG_PATH: envalid.str({
-      default: path.join('/ipfs', 'config'),
-      devDefault: path.resolve(__dirname, 'data', 'config'),
-    }),
-    IPFS_PATH: envalid.str({ default: '/ipfs', devDefault: path.resolve(__dirname, `data`) }),
+    IPFS_PATH: envalid.str({ default: '/ipfs', devDefault: path.resolve(__dirname, '..', `data`) }),
+    IPFS_EXECUTABLE: envalid.str({ default: path.resolve(__dirname, '..', `node_modules`, '.bin', 'ipfs') }),
+    IPFS_ARGS: validateArgs({ default: '["daemon"]' }),
+    IPFS_LOG_LEVEL: envalid.str({ default: 'info', devDefault: 'debug' }),
     METADATA_KEY_LENGTH: envalid.num({ default: 32 }),
     METADATA_VALUE_LITERAL_LENGTH: envalid.num({ default: 32 }),
   },

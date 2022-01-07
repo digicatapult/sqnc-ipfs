@@ -4,11 +4,12 @@ const pinoHttp = require('pino-http')
 const { PORT } = require('./env')
 const logger = require('./logger')
 const { setupKeyWatcher } = require('./keyWatcher')
-const { setupIpfs } = require('./ipfs')
+const { setupIpfs, assertIpfsPath } = require('./ipfs')
 
 async function createHttpServer() {
   const app = express()
   const requestLogger = pinoHttp({ logger })
+  await assertIpfsPath()
   const ipfs = await setupIpfs()
 
   await setupKeyWatcher({
