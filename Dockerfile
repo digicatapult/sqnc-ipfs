@@ -50,4 +50,4 @@ EXPOSE 5001
 
 HEALTHCHECK CMD curl --fail http://localhost:80/health || exit 1
 
-CMD ["node", "./app/index.js"]
+ENTRYPOINT [ "./app/index.js" ]
