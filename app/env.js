@@ -24,7 +24,10 @@ const vars = envalid.cleanEnv(
     NODE_HOST: envalid.host({ devDefault: 'localhost' }),
     NODE_PORT: envalid.port({ default: 9944 }),
     IPFS_PATH: envalid.str({ default: '/ipfs', devDefault: path.resolve(__dirname, '..', `data`) }),
-    IPFS_EXECUTABLE: envalid.str({ default: path.resolve(__dirname, '..', `node_modules`, '.bin', 'ipfs') }),
+    IPFS_EXECUTABLE: envalid.str({
+      default: 'ipfs',
+      devDefault: path.resolve(__dirname, '..', `node_modules`, '.bin', 'ipfs'),
+    }),
     IPFS_ARGS: validateArgs({ default: '["daemon"]' }),
     IPFS_LOG_LEVEL: envalid.str({ default: 'info', devDefault: 'debug' }),
     METADATA_KEY_LENGTH: envalid.num({ default: 32 }),
