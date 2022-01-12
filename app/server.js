@@ -47,15 +47,6 @@ async function startServer() {
   try {
     const { app, ipfs } = await createHttpServer()
 
-    const setupGracefulExit = ({ sigName, server, exitCode }) => {
-      process.on(sigName, async () => {
-        server.close(async () => {
-          await ipfs.stop()
-          process.exit(exitCode)
-        })
-      })
-    }
-
     const server = await new Promise((resolve, reject) => {
       let resolved = false
       const server = app.listen(PORT, (err) => {
@@ -79,6 +70,21 @@ async function startServer() {
       })
     })
 
+    const closeHandler = (exitCode) => async () => {
+      server.close(async () => {
+        await ipfs.stop()
+        process.exit(exitCode)
+      })
+    }
+
+    // on unexpected close just shutdown the server
+    ipfs.on('unexpected-close', function () {
+      closeHandler(1)()
+    })
+
+    const setupGracefulExit = ({ sigName, exitCode }) => {
+      process.on(sigName, closeHandler(exitCode))
+    }
     setupGracefulExit({ sigName: 'SIGINT', server, exitCode: 0 })
     setupGracefulExit({ sigName: 'SIGTERM', server, exitCode: 143 })
   } catch (err) {

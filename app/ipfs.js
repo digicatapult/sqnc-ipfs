@@ -1,5 +1,7 @@
 const { spawn } = require('child_process')
 const fs = require('fs/promises')
+const EventEmitter = require('events')
+
 const { IPFS_PATH, IPFS_EXECUTABLE, IPFS_ARGS, IPFS_LOG_LEVEL } = require('./env')
 const logger = require('./logger')
 
@@ -23,7 +25,15 @@ async function setupIpfs() {
   let ipfs = null
   let ipfsLogger = logger.child({ module: 'ipfs' }, { level: IPFS_LOG_LEVEL })
 
-  return {
+  const that = new EventEmitter()
+
+  const unexpectedCloseListener = (code) => {
+    ipfsLogger.error('IPFS process unexpectedly exited with code %s', code)
+    ipfs = null
+    that.emit('unexpected-close')
+  }
+
+  Object.assign(that, {
     start: async ({ swarmKey }) => {
       if (ipfs) {
         throw new Error('Cannot start an IPFS node that is already running')
@@ -49,17 +59,13 @@ async function setupIpfs() {
       })
 
       ipfs.stderr.on('data', (data) => {
-        ipfsLogger.error(`%j`, data)
+        const dataString = `${data}`
+        for (const line of dataString.split('\n')) {
+          ipfsLogger.warn('IPFS: %s', line)
+        }
       })
 
-      ipfs.stderr.on('data', (err) => {
-        ipfsLogger.error('%j', err)
-      })
-
-      ipfs.on('close', (code) => {
-        ipfsLogger.info('IPFS process exited with code %s', code)
-        ipfs = null
-      })
+      ipfs.on('close', unexpectedCloseListener)
     },
     stop: async () => {
       logger.info('Stopping IPFS')
@@ -67,10 +73,13 @@ async function setupIpfs() {
       try {
         await new Promise((resolve, reject) => {
           if (ipfs) {
+            ipfs.removeListener('close', unexpectedCloseListener)
             ipfs.on('close', () => {
+              ipfs = null
               resolve()
             })
             ipfs.on('error', (err) => {
+              ipfs = null
               reject(err)
             })
             ipfs.kill()
@@ -83,7 +92,9 @@ async function setupIpfs() {
       }
       await removeSwarmKeyFile()
     },
-  }
+  })
+
+  return that
 }
 
 module.exports = {
