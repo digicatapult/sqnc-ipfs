@@ -1,25 +1,10 @@
 const { spawn } = require('child_process')
-const fs = require('fs/promises')
 const EventEmitter = require('events')
 
 const { IPFS_PATH, IPFS_EXECUTABLE, IPFS_ARGS, IPFS_LOG_LEVEL } = require('./env')
 const logger = require('./logger')
 
 const { createSwarmKeyFile, removeSwarmKeyFile } = require('./swarmKey')
-
-async function assertIpfsPath() {
-  // check for presence of IPFS_PATH
-  try {
-    await fs.access(IPFS_PATH)
-  } catch (err) {
-    if (err.code === 'ENOENT') {
-      logger.warn('IPFS_PATH %s does not exist. Will be created')
-      await fs.mkdir(IPFS_PATH)
-    } else {
-      throw err
-    }
-  }
-}
 
 async function setupIpfs() {
   let ipfs = null
@@ -98,6 +83,5 @@ async function setupIpfs() {
 }
 
 module.exports = {
-  assertIpfsPath,
   setupIpfs,
 }
