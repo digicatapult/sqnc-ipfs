@@ -1,20 +1,15 @@
 # syntax=docker/dockerfile:1.3-labs
 
-FROM golang:1.17-alpine3.15 AS ipfs_build
-
-# This is set in the CI as well, be sure to update in both places
-ARG IPFS_TAG="v0.11.0"
+ARG IPFS_BUILD_IMAGE_VERSION=1.17-alpine3.15
+FROM golang:${IPFS_BUILD_IMAGE_VERSION}} AS ipfs_build
 
 ENV SRC_DIR /go/src/github.com/ipfs/go-ipfs
 
 RUN apk add --no-cache git make bash gcc musl-dev
-  # && go get -u github.com/whyrusleeping/gx
-
-# Fixes an issue with symlinked binaries not playing well with musl
-# Thanks https://stackoverflow.com/questions/34729748/installed-go-binary-not-found-in-path-on-alpine-linux-docker
-# RUN mkdir /lib64 && ln -s /lib/libc.musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2
 
 WORKDIR /target
+
+ARG IPFS_TAG="v0.11.0"
 
 RUN <<EOF
 set -ex
@@ -25,7 +20,7 @@ cp $SRC_DIR/cmd/ipfs/ipfs /target/ipfs
 rm -rf $SRC_DIR
 EOF
 
-FROM node:16.13.1-alpine
+FROM node:16.13.2-alpine
 RUN npm i -g npm@latest
 
 ARG LOGLEVEL
