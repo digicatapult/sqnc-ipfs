@@ -30,8 +30,11 @@ spec:
               $ipfsCommand config Addresses.API /ipv4/0.0.0.0/tcp/$ipfsApiPort;
               $ipfsCommand config Addresses.Swarm /ipv4/0.0.0.0/tcp/$ipfsSwarmPort;
               $ipfsCommand config Datastore.StorageMax $(echo "$dataVolumeSize""Gb";
-
-
+              $ipfsCommand config --json API.HTTPHeaders.Access-Control-Allow-Origin \'[\\"http://0.0.0.0:$ipfsApiPort\\", \\"http://127.0.0.1:$ipfsApiPort\\"]\';
+              $ipfsCommand bootstrap rm --all;
+          volumeMounts:
+            - mountpath: /ipfs
+              name: ipfs-data
       containers:
         - name: {{ include "vitalam-ipfs.fullname" . }}
           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
@@ -69,7 +72,10 @@ spec:
                   key: ipfsCommand
             {{- end }}
             - name: IPFS_ARGS
-              ValueFrom: 
+              ValueFrom:
+                configMapKeyRef:
+                  name: {{ include "vitalam-ipfs.fullname" . }}-config
+                  key: ipfsArgs
             - name: IPFS_PATH
               value: /ipfs
           volumeMounts:
