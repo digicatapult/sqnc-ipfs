@@ -1,0 +1,113 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "vitalam-ipfs.fullname" . }}
+  labels:
+    {{- include "vitalam-ipfs.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      name: {{ include "vitalam-ipfs.fullname" . }}
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        checksum/secret: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
+      labels:
+        name: {{ include "vitalam-ipfs.fullname" . }}
+    spec:
+      {{- include "vitalam-ipfs.imagePullSecrets" . | indent 6 }}
+      initContainers:
+        - name: {{ include "vitalam-ipfs.initIpfsConfig.name" . }}
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+          envFrom:
+            - configMapRef:
+                name: {{ include "vitalam-ipfs.fullname" . }}-config
+          command: ['/bin/sh', '-c']
+          args:
+            - $ipfsCommand init;
+              $ipfsCommand config Addresses.API /ipv4/0.0.0.0/tcp/$ipfsApiPort;
+              $ipfsCommand config Addresses.Swarm /ipv4/0.0.0.0/tcp/$ipfsSwarmPort;
+              $ipfsCommand config Datastore.StorageMax $(echo "$dataVolumeSize""Gb";
+
+
+      containers:
+        - name: {{ include "vitalam-ipfs.fullname" . }}
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+          env:
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "vitalam-ipfs.fullname" . }}-config
+                  key: healthCheckPort
+            - name: LOG_LEVEL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "vitalam-ipfs.fullname" . }}-config
+                  key: logLevel
+            {{- if .Values.config.nodeHost }}
+            - name: NODE_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "vitalam-ipfs.fullname" . }}-config
+                  key: nodeHost
+            {{- end }}
+            {{- if .Values.config.nodePort }}
+            - name: NODE_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "vitalam-ipfs.fullname" . }}-config
+                  key: nodePort
+            {{- end }}
+            {{- if .Values.config.ipfsCommand }}
+            - name: IPFS_EXECUTABLE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "vitalam-ipfs.fullname" . }}-config
+                  key: ipfsCommand
+            {{- end }}
+            - name: IPFS_ARGS
+              ValueFrom: 
+            - name: IPFS_PATH
+              value: /ipfs
+          volumeMounts:
+            - mountpath: /ipfs
+              name: ipfs-data
+          ports:
+            - containerPort: {{ .Values.config.healthCheckPort }}
+              name: http-healthcheck
+              protocol: TCP
+            - containerPort: {{ .Values.config.ipfsSwarmPort }}
+              name: ipfs-swarm
+              protocol: TCP
+            - containerPort: {{ .Values.config.ipfsApiPort }}
+              name: ipfs-http-api
+              protocol: TCP
+          {{- if .Values.config.enableStartupProbe }}
+          startupProbe:
+            failureThreshold: 30
+            periodSeconds: 10
+            httpGet:
+              path: /health
+              port: http-healthcheck
+          {{- end }}
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: {{ .Values.config.healthCheckPort }}
+            initialDelaySeconds: 30
+            timeoutSeconds: 3
+            periodSeconds: 5
+  volumeClaimTemplates:
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        name: ipfs-data
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: {{ .Values.storage.storageClass }}
+        resources:
+          requests:
+            storage: {{ printf "%vGi" .Values.storage.dataVolumeSize | quote }}
