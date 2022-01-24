@@ -8,7 +8,7 @@ config:
   ipfsSwarmPort: 4001
   ipfsDataPath: "/ipfs"
   ipfsCommand: "/usr/local/bin/ipfs"
-  ipfsArgs: 
+  ipfsArgs:
     - daemon
   ipfsLogLevel: warn
   enableStartupProbe: true
