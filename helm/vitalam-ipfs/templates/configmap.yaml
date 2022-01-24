@@ -6,7 +6,7 @@ metadata:
     {{- include "vitalam-ipfs.labels" . | nindent 4 }}
 data:
   healthCheckPort: {{ .Values.config.healthCheckPort | quote }}
-  logLevel: {{ .Values.config.loglevel }}
+  logLevel: {{ .Values.config.logLevel }}
   {{- if .Values.config.nodeHost }}
   nodeHost: {{ .Values.config.nodeHost }}
   {{- end }}
@@ -16,6 +16,6 @@ data:
   ipfsCommand: {{ .Values.config.ipfsCommand }}
   ipfsLogLevel: {{ .Values.config.ipfsLogLevel }}
   ipfsArgs: {{ .Values.config.ipfsArgs }}
-  ipfsApiPort: {{ .Values.config.ipfsApiPort }}
-  ipfsSwarmPort: {{ .Values.config.ipfsSwarmPort }}
-  dataVolumeSize: {{ .Values.storage.dataVolumeSize}}
+  ipfsApiPort: {{ .Values.config.ipfsApiPort | quote }}
+  ipfsSwarmPort: {{ .Values.config.ipfsSwarmPort | quote }}
+  dataVolumeSize: {{ .Values.storage.dataVolumeSize | quote }}

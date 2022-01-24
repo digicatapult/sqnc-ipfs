@@ -1,14 +1,14 @@
-#fullNameOverride:
+# fullNameOverride:
 config:
   healthCheckPort: 80
-  nodeHost:
-  nodePort:
+  # nodeHost: 
+  # nodePort:
   logLevel: info
   ipfsApiPort: 5001
   ipfsSwarmPort: 4001
   ipfsDataPath: "/ipfs"
   ipfsCommand: "/usr/local/bin/ipfs"
-  ipfsArgs: '["daemon"]'
+  ipfsArgs: "daemon"
   ipfsLogLevel: warn
   enableStartupProbe: true
 image:
@@ -17,4 +17,4 @@ image:
   tag: 'v1.0.0'
 storage:
   storageClass: ""
-  dataVolumeSize: 10 #in Gigabytes
+  dataVolumeSize: 10  # in Gigabytes

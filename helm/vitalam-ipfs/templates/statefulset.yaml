@@ -5,6 +5,7 @@ metadata:
   labels:
     {{- include "vitalam-ipfs.labels" . | nindent 4 }}
 spec:
+  serviceName: {{ include "vitalam-ipfs.fullname" . }}
   selector:
     matchLabels:
       name: {{ include "vitalam-ipfs.fullname" . }}
@@ -21,6 +22,9 @@ spec:
         - name: {{ include "vitalam-ipfs.initIpfsConfig.name" . }}
           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
           imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+          env:
+            - name: IPFS_PATH
+              value: {{ .Values.config.ipfsDataPath }}
           envFrom:
             - configMapRef:
                 name: {{ include "vitalam-ipfs.fullname" . }}-config
@@ -28,17 +32,19 @@ spec:
           args:
             - $ipfsCommand init;
               $ipfsCommand config Addresses.API /ipv4/0.0.0.0/tcp/$ipfsApiPort;
-              $ipfsCommand config Addresses.Swarm /ipv4/0.0.0.0/tcp/$ipfsSwarmPort;
-              $ipfsCommand config Datastore.StorageMax $(echo "$dataVolumeSize""Gb";
+              $ipfsCommand config Addresses.Swarm [\"/ipv4/0.0.0.0/tcp/$ipfsSwarmPort\"];
+              $ipfsCommand config Datastore.StorageMax 10Gb;
               $ipfsCommand config --json API.HTTPHeaders.Access-Control-Allow-Origin \'[\\"http://0.0.0.0:$ipfsApiPort\\", \\"http://127.0.0.1:$ipfsApiPort\\"]\';
               $ipfsCommand bootstrap rm --all;
+              $ipfsCommand config show; 
           volumeMounts:
-            - mountpath: /ipfs
+            - mountPath: {{ .Values.config.ipfsDataPath }}
               name: ipfs-data
       containers:
         - name: {{ include "vitalam-ipfs.fullname" . }}
           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
           imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+          command: [ './app/index.js' ]
           env:
             - name: PORT
               valueFrom:
@@ -72,18 +78,18 @@ spec:
                   key: ipfsCommand
             {{- end }}
             - name: IPFS_ARGS
-              ValueFrom:
+              valueFrom:
                 configMapKeyRef:
                   name: {{ include "vitalam-ipfs.fullname" . }}-config
                   key: ipfsArgs
             - name: IPFS_PATH
-              value: /ipfs
+              value: {{ .Values.config.ipfsDataPath }}
           volumeMounts:
-            - mountpath: /ipfs
+            - mountPath: {{ .Values.config.ipfsDataPath }}
               name: ipfs-data
           ports:
             - containerPort: {{ .Values.config.healthCheckPort }}
-              name: http-healthcheck
+              name: http-health
               protocol: TCP
             - containerPort: {{ .Values.config.ipfsSwarmPort }}
               name: ipfs-swarm
@@ -97,7 +103,7 @@ spec:
             periodSeconds: 10
             httpGet:
               path: /health
-              port: http-healthcheck
+              port: http-health
           {{- end }}
           livenessProbe:
             httpGet:
