@@ -17,5 +17,5 @@ image:
   pullPolicy: IfNotPresent
   tag: 'v1.0.1'
 storage:
-  storageClass: default
+  storageClass: nil
   dataVolumeSize: 1  # in Gigabytes

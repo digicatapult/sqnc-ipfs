@@ -118,7 +118,9 @@ spec:
         name: ipfs-data
       spec:
         accessModes: [ "ReadWriteOnce" ]
+        {{- if .Values.storage.storageClass }}
         storageClassName: {{ .Values.storage.storageClass }}
+        {{- end }}
         resources:
           requests:
             storage: {{ printf "%vGi" .Values.storage.dataVolumeSize | quote }}
