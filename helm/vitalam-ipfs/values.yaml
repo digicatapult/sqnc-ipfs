@@ -1,20 +1,21 @@
 # fullNameOverride:
 config:
   healthCheckPort: 80
-  # nodeHost: 
+  nodeHost: "blah"
   # nodePort:
   logLevel: info
   ipfsApiPort: 5001
   ipfsSwarmPort: 4001
   ipfsDataPath: "/ipfs"
   ipfsCommand: "/usr/local/bin/ipfs"
-  ipfsArgs: "daemon"
+  ipfsArgs: 
+    - daemon
   ipfsLogLevel: warn
   enableStartupProbe: true
 image:
   repository: ghcr.io/digicatapult/vitalam-ipfs
   pullPolicy: IfNotPresent
-  tag: 'v1.0.0'
+  tag: 'v1.0.1'
 storage:
-  storageClass: ""
-  dataVolumeSize: 10  # in Gigabytes
+  storageClass: nil
+  dataVolumeSize: 1  # in Gigabytes

@@ -15,7 +15,7 @@ data:
   {{- end }}
   ipfsCommand: {{ .Values.config.ipfsCommand }}
   ipfsLogLevel: {{ .Values.config.ipfsLogLevel }}
-  ipfsArgs: {{ .Values.config.ipfsArgs }}
+  ipfsArgs: {{ .Values.config.ipfsArgs | toJson | quote }}
   ipfsApiPort: {{ .Values.config.ipfsApiPort | quote }}
   ipfsSwarmPort: {{ .Values.config.ipfsSwarmPort | quote }}
   dataVolumeSize: {{ .Values.storage.dataVolumeSize | quote }}

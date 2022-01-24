@@ -28,15 +28,14 @@ spec:
           envFrom:
             - configMapRef:
                 name: {{ include "vitalam-ipfs.fullname" . }}-config
-          command: ['/bin/sh', '-c']
+          command: ['/bin/sh', '-c', '-e', '-x']
           args:
-            - $ipfsCommand init;
-              $ipfsCommand config Addresses.API /ipv4/0.0.0.0/tcp/$ipfsApiPort;
-              $ipfsCommand config Addresses.Swarm [\"/ipv4/0.0.0.0/tcp/$ipfsSwarmPort\"];
-              $ipfsCommand config Datastore.StorageMax 10Gb;
-              $ipfsCommand config --json API.HTTPHeaders.Access-Control-Allow-Origin \'[\\"http://0.0.0.0:$ipfsApiPort\\", \\"http://127.0.0.1:$ipfsApiPort\\"]\';
+            - $ipfsCommand init --profile server;
+              $ipfsCommand config Addresses.API /ip4/0.0.0.0/tcp/$ipfsApiPort;
+              $ipfsCommand config --json Addresses.Swarm "[\"/ip4/0.0.0.0/tcp/$ipfsSwarmPort\"]";
+              $ipfsCommand config Datastore.StorageMax $(echo "$dataVolumeSize""Gb");
+              $ipfsCommand config --json API.HTTPHeaders.Access-Control-Allow-Origin "[\"http://0.0.0.0:$ipfsApiPort\", \"http://127.0.0.1:$ipfsApiPort\"]";
               $ipfsCommand bootstrap rm --all;
-              $ipfsCommand config show; 
           volumeMounts:
             - mountPath: {{ .Values.config.ipfsDataPath }}
               name: ipfs-data
