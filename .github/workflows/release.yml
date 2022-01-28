@@ -246,7 +246,7 @@ jobs:
             org.opencontainers.image.version=${{ needs.check-version.outputs.version }}
             org.opencontainers.image.created=${{ needs.check-version.outputs.build_date }}
 
-      Publish helm charts
+      # Publish helm charts
       - name: Publish Helm charts
         uses: stefanprodan/helm-gh-pages@master
         with:
