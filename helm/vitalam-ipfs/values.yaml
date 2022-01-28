@@ -13,10 +13,12 @@ config:
   # ipfsBootNodeAddress: /dnsaddr/blah.test.com/p2p/PeerId # Valid Format for this is /multiaddr/PeerId see https://github.com/multiformats/multiaddr
   ipfsLogLevel: trace
   enableLivenessProbe: true
+  
 image:
   repository: ghcr.io/digicatapult/vitalam-ipfs
   pullPolicy: IfNotPresent
   tag: 'v1.1.0'
+
 storage:
   storageClass: ""
   dataVolumeSize: 1  # in Gigabytes
