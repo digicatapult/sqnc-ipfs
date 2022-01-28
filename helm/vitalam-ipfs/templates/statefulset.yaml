@@ -30,12 +30,14 @@ spec:
                 name: {{ include "vitalam-ipfs.fullname" . }}-config
           command: ['/bin/sh', '-c', '-e', '-x']
           args:
-            - $ipfsCommand init --profile server;
+            - |
+              [ ! -f "$IPFS_PATH/config" ] && $ipfsCommand init --profile server;
               $ipfsCommand config Addresses.API /ip4/0.0.0.0/tcp/$ipfsApiPort;
               $ipfsCommand config --json Addresses.Swarm "[\"/ip4/0.0.0.0/tcp/$ipfsSwarmPort\"]";
               $ipfsCommand config Datastore.StorageMax $(echo "$dataVolumeSize""Gb");
               $ipfsCommand config --json API.HTTPHeaders.Access-Control-Allow-Origin "[\"http://0.0.0.0:$ipfsApiPort\", \"http://127.0.0.1:$ipfsApiPort\"]";
               $ipfsCommand bootstrap rm --all;
+              if [ ! -z "$ipfsBootNodeAddress" ]; then $ipfsCommand bootstrap add $ipfsBootNodeAddress; fi;
           volumeMounts:
             - mountPath: {{ .Values.config.ipfsDataPath }}
               name: ipfs-data
@@ -55,13 +57,11 @@ spec:
                 configMapKeyRef:
                   name: {{ include "vitalam-ipfs.fullname" . }}-config
                   key: logLevel
-            {{- if .Values.config.nodeHost }}
             - name: NODE_HOST
               valueFrom:
                 configMapKeyRef:
                   name: {{ include "vitalam-ipfs.fullname" . }}-config
                   key: nodeHost
-            {{- end }}
             {{- if .Values.config.nodePort }}
             - name: NODE_PORT
               valueFrom:
@@ -96,21 +96,16 @@ spec:
             - containerPort: {{ .Values.config.ipfsApiPort }}
               name: ipfs-http-api
               protocol: TCP
-          {{- if .Values.config.enableStartupProbe }}
-          startupProbe:
-            failureThreshold: 30
-            periodSeconds: 10
-            httpGet:
-              path: /health
-              port: http-health
-          {{- end }}
+          {{- if .Values.config.enableLivenessProbe }}
           livenessProbe:
             httpGet:
               path: /health
-              port: {{ .Values.config.healthCheckPort }}
-            initialDelaySeconds: 30
+              port: http-health
+            initialDelaySeconds: 60
+            failureThreshold: 5
             timeoutSeconds: 3
-            periodSeconds: 5
+            periodSeconds: 10
+          {{- end }}
   volumeClaimTemplates:
     - apiVersion: v1
       kind: PersistentVolumeClaim

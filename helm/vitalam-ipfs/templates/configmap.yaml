@@ -9,6 +9,8 @@ data:
   logLevel: {{ .Values.config.logLevel }}
   {{- if .Values.config.nodeHost }}
   nodeHost: {{ .Values.config.nodeHost }}
+  {{- else if .Values.vitalamNode.enabled }}
+  nodeHost: {{ template "vitalam-node.fullname" .Subcharts.vitalamNode }}
   {{- end }}
   {{- if .Values.config.nodePort }}
   nodePort: {{ .Values.config.nodePort }}
@@ -16,6 +18,9 @@ data:
   ipfsCommand: {{ .Values.config.ipfsCommand }}
   ipfsLogLevel: {{ .Values.config.ipfsLogLevel }}
   ipfsArgs: {{ .Values.config.ipfsArgs | toJson | quote }}
+  {{- if .Values.config.ipfsBootNodeAddress }}
+  ipfsBootNodeAddress: {{ .Values.config.ipfsBootNodeAddress }}
+  {{- end }}
   ipfsApiPort: {{ .Values.config.ipfsApiPort | quote }}
   ipfsSwarmPort: {{ .Values.config.ipfsSwarmPort | quote }}
   dataVolumeSize: {{ .Values.storage.dataVolumeSize | quote }}
