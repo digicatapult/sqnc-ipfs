@@ -12,9 +12,6 @@ data:
   {{- else if .Values.vitalamNode.enabled }}
   nodeHost: {{ template "vitalam-node.fullname" .Subcharts.vitalamNode }}
   {{- end }}
-  {{- if .Values.config.nodePort }}
-  nodePort: {{ .Values.config.nodePort }}
-  {{- end }}
   ipfsCommand: {{ .Values.config.ipfsCommand }}
   ipfsLogLevel: {{ .Values.config.ipfsLogLevel }}
   ipfsArgs: {{ .Values.config.ipfsArgs | toJson | quote }}
