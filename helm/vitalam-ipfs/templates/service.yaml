@@ -24,4 +24,4 @@ spec:
   ports:
     - protocol: 'TCP'
       port: 5001
-      targetPort: {{ .Vales.config.ipfsApiPort }}
+      targetPort: {{ .Values.config.ipfsApiPort }}
