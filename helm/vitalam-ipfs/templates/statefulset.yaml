@@ -88,7 +88,7 @@ spec:
             - containerPort: {{ .Values.config.ipfsSwarmPort }}
               name: ipfs-swarm
               protocol: TCP
-            - containerPort: {{ .Values.config.ipfsApiPort }}
+            - containerPort: {{ include "vitalam-ipfs.ipfsApiPort" . }}
               name: ipfs-http-api
               protocol: TCP
           {{- if .Values.config.enableLivenessProbe }}

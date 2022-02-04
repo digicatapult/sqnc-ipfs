@@ -24,4 +24,4 @@ spec:
   ports:
     - protocol: 'TCP'
       port: 5001
-      targetPort: {{ .Values.config.ipfsApiPort }}
+      targetPort: {{ include "vitalam-ipfs.ipfsApiPort" . }}
