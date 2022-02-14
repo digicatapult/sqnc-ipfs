@@ -1,5 +1,11 @@
 const { ApiPromise, WsProvider } = require('@polkadot/api')
-const { NODE_HOST, NODE_PORT, METADATA_KEY_LENGTH, METADATA_VALUE_LITERAL_LENGTH, PROCESS_IDENTIFIER_LENGTH } = require('../env')
+const { 
+  NODE_HOST, 
+  NODE_PORT, 
+  METADATA_KEY_LENGTH, 
+  METADATA_VALUE_LITERAL_LENGTH, 
+  PROCESS_IDENTIFIER_LENGTH,
+} = require('../env')
 
 const provider = new WsProvider(`ws://${NODE_HOST}:${NODE_PORT}`)
 const apiOptions = {
@@ -58,7 +64,7 @@ const apiOptions = {
     },
     IsNew: 'bool',
     Restrictions: 'Vec<Restriction>',
-  }
+  },
 }
 
 const createNodeApi = async () => {
