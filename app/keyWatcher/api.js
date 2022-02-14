@@ -1,9 +1,9 @@
 const { ApiPromise, WsProvider } = require('@polkadot/api')
-const { 
-  NODE_HOST, 
-  NODE_PORT, 
-  METADATA_KEY_LENGTH, 
-  METADATA_VALUE_LITERAL_LENGTH, 
+const {
+  NODE_HOST,
+  NODE_PORT,
+  METADATA_KEY_LENGTH,
+  METADATA_VALUE_LITERAL_LENGTH,
   PROCESS_IDENTIFIER_LENGTH,
 } = require('../env')
 
