@@ -1,6 +1,6 @@
 version: '3'
 services:
-  vitalam-node:
+  dscp-node:
     image: ghcr.io/digicatapult/vitalam-node:v2.11.0
     command:
       --base-path /data/
