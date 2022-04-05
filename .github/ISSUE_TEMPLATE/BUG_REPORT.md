@@ -13,7 +13,7 @@ Have you read DSCP's Code of Conduct? By filing an Issue, you are expected to co
 
 - [ ] Put an X between the brackets on this line if you have done all of the following:
   - Checked the FAQs for common solutions: <https://github.com/digicatapult/dscp-ipfs/blob/main/CONTRIBUTING.md/#FAQs>
-  - Checked that your issue isn't already filed: <https://github.com/issues?utf8=✓&q=is%3Aissue+user%3Adscp-node>
+  - Checked that your issue isn't already filed: <https://github.com/issues?utf8=✓&q=is%3Aissue+user%3Adscp-ipfs>
 
 ### Description
 
