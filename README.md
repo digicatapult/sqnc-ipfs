@@ -8,7 +8,7 @@ Manages a go-ipfs instance maintaining the private network swarm key based on th
 
 | variable                      | required |   default    | description                                                                          |
 | :---------------------------- | :------: | :----------: | :----------------------------------------------------------------------------------- |
-| SERVICE_TYPE                  |    N     | `DSCP_IPFS`  | Service type to appear in logs                                                       |
+| SERVICE_TYPE                  |    N     | `dscp-ipfs`  | Service type to appear in logs                                                       |
 | PORT                          |    N     |     `80`     | The port for the API to listen on                                                    |
 | LOG_LEVEL                     |    N     |    `info`    | Logging level. Valid values are [`trace`, `debug`, `info`, `warn`, `error`, `fatal`] |
 | NODE_HOST                     |    Y     |              | Hostname of the `dscp-node` to use as the swarm key source                           |
