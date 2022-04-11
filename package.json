@@ -1,6 +1,6 @@
 {
   "name": "@digicatapult/dscp-ipfs",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Service for WASP",
   "main": "app/index.js",
   "scripts": {
@@ -31,6 +31,7 @@
   },
   "homepage": "https://github.com/digicatapult/dscp-ipfs#readme",
   "dependencies": {
+    "@digicatapult/dscp-node": "latest",
     "@polkadot/api": "^5.9.1",
     "dotenv": "^8.2.0",
     "envalid": "^7.0.0",
