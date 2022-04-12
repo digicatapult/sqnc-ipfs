@@ -1,15 +1,27 @@
-const { ApiPromise, WsProvider } = require('@polkadot/api')
-const types = require('@digicatapult/dscp-node')
-const { NODE_HOST, NODE_PORT } = require('../env')
-
-const provider = new WsProvider(`ws://${NODE_HOST}:${NODE_PORT}`)
-const apiOptions = {
-  provider,
-  types,
-}
+const { buildApi } = require('@digicatapult/dscp-node')
+const logger = require('../logger')
+const {
+  NODE_HOST,
+  NODE_PORT,
+  METADATA_KEY_LENGTH,
+  METADATA_VALUE_LITERAL_LENGTH,
+  PROCESS_IDENTIFIER_LENGTH,
+} = require('../env')
 
 const createNodeApi = async () => {
-  const api = await ApiPromise.create(apiOptions)
+  const { api } = buildApi({
+    options: {
+      apiHost: NODE_HOST,
+      apiPort: NODE_PORT,
+      metadataKeyLength: METADATA_KEY_LENGTH,
+      metadataValueLiteralLength: METADATA_VALUE_LITERAL_LENGTH,
+      processorIdentifierLength: PROCESS_IDENTIFIER_LENGTH,
+      logger,
+    },
+  })
+
+  await api.isReady
+
   return {
     _api: api,
     isEventKeyUpdate: (event) => api.events.ipfsKey.UpdateKey.is(event),
