@@ -9,7 +9,7 @@ const {
 } = require('../env')
 
 const createNodeApi = async () => {
-  const { api } = buildApi({
+  const { api, keyring } = buildApi({
     options: {
       apiHost: NODE_HOST,
       apiPort: NODE_PORT,
@@ -24,6 +24,7 @@ const createNodeApi = async () => {
 
   return {
     _api: api,
+    _keyring: keyring,
     isEventKeyUpdate: (event) => api.events.ipfsKey.UpdateKey.is(event),
     getCurrentKey: async () => await api.query.ipfsKey.key(),
     setupEventProcessor: (eventProcessor) => api.query.system.events(eventProcessor),
