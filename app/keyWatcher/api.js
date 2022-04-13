@@ -1,5 +1,5 @@
 const { buildApi } = require('@digicatapult/dscp-node')
-const logger = require('../logger')
+
 const {
   NODE_HOST,
   NODE_PORT,
@@ -16,7 +16,6 @@ const createNodeApi = async () => {
       metadataKeyLength: METADATA_KEY_LENGTH,
       metadataValueLiteralLength: METADATA_VALUE_LITERAL_LENGTH,
       processorIdentifierLength: PROCESS_IDENTIFIER_LENGTH,
-      logger,
     },
   })
 
