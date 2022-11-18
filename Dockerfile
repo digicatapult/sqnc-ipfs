@@ -6,7 +6,7 @@ FROM golang:$IPFS_BUILD_IMAGE_VERSION AS ipfs_build
 
 ENV SRC_DIR /go/src/github.com/ipfs/go-ipfs
 
-RUN apk add --no-cache git make bash gcc musl-dev
+RUN apk add --no-cache git make bash gcc musl-dev binutils-gold
 
 WORKDIR /target
 
@@ -22,7 +22,7 @@ rm -rf $SRC_DIR
 EOF
 
 FROM node:$NODE_RUNTIME_IMAGE_VERSION AS runtime
-RUN apk add --no-cache curl
+RUN apk add --no-cache curl python3 make g++
 RUN npm i -g npm@8.x.x
 
 ARG LOGLEVEL
