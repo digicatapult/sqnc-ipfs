@@ -5,8 +5,9 @@ ARG NODE_RUNTIME_IMAGE_VERSION=16-alpine
 FROM golang:$IPFS_BUILD_IMAGE_VERSION AS ipfs_build
 
 ENV SRC_DIR /go/src/github.com/ipfs/go-ipfs
-
-RUN apk add --no-cache git make bash gcc musl-dev binutils-gold
+ARG TARGETPLATFORM
+RUN if [ "$TARGETPLATFORM" = "linux/arm64" ]; then apk add --no-cache binutils-gold; fi
+RUN apk add --no-cache git make bash gcc musl-dev
 
 WORKDIR /target
 
@@ -22,7 +23,9 @@ rm -rf $SRC_DIR
 EOF
 
 FROM node:$NODE_RUNTIME_IMAGE_VERSION AS runtime
-RUN apk add --no-cache curl python3 make g++
+ARG TARGETPLATFORM
+RUN if [ "$TARGETPLATFORM" = "linux/arm64" ]; then apk add --no-cache python3 make g++; fi
+RUN apk add --no-cache curl
 RUN npm i -g npm@8.x.x
 
 ARG LOGLEVEL
