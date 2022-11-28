@@ -6,9 +6,7 @@ export const createNodeApi = async () => {
   const provider = new WsProvider(`ws://${env.NODE_HOST}:${env.NODE_PORT}`)
   const api = new ApiPromise({ provider })
 
-  api.isReadyOrError.catch(() => {}) // prevent unhandled promise rejection errors
-
-  await api.isReady
+  await api.isReadyOrError.catch(() => {}) // prevent unhandled promise rejection errors
 
   return {
     _api: api,
