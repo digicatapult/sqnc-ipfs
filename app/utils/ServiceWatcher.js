@@ -16,32 +16,19 @@ class ServiceWatcher {
     this.#timeout = env.HEALTHCHECK_TIMEOUT_MS
     this.services = this.#init(apis)
     this.metrics = {
-      // TODO abstract into a method this.#initCustoMetrics with the last one
-      filesCount: () => {
-        if (!this.metrics.filesCount) {
-          return new client.Gauge({
-            name: 'dscp_ipfs_files_count',
-            help: 'a number of files (blocks)',
-          })
-        }
-      },
-      totalFilesSize: () => {
-        if (!this.metrics.totalFilesSize) {
-          return new client.Gauge({
-            name: 'dscp_ipfs_total_files_size',
-            help: 'a total number of storage used in bytes? TODO confim',
-          })
-        }
-      },
-      peerCount: () => {
-        if (!this.metrics.peerCount) {
-          return new client.Gauge({
-            name: 'dscp_ipfs_swarm_peer_count',
-            help: 'a number of discovered and connected peers',
-            labelNames: ['type'],
-          })
-        }
-      },
+      filesCount: new client.Gauge({
+        name: 'dscp_ipfs_files_count',
+        help: 'a number of files (blocks)',
+      }),
+      totalFilesSize: new client.Gauge({
+        name: 'dscp_ipfs_total_files_size',
+        help: 'a total number of storage used in bytes? TODO confim',
+      }),
+      peerCount: new client.Gauge({
+        name: 'dscp_ipfs_swarm_peer_count',
+        help: 'a number of discovered and connected peers',
+        labelNames: ['type'],
+      }),
     }
   }
 
@@ -63,6 +50,7 @@ class ServiceWatcher {
 
   // organize services and store in this.services
   #init(services) {
+    client.register.clear()
     return Object.keys(services)
       .map((service) => {
         const { healthCheck, ...api } = services[service]
@@ -77,8 +65,10 @@ class ServiceWatcher {
   }
 
   async #updateMetrics() {
-    const { data: { Blocks, Size } } = await axios({
-      url: `${this.ipfsApiUrl}files/stat`,
+    const {
+      data: { Entries: files },
+    } = await axios({
+      url: `${this.ipfsApiUrl}files/ls`,
       method: 'POST',
     })
     const { data: connectedPeers } = await axios({
@@ -91,10 +81,12 @@ class ServiceWatcher {
     })
 
     // update instance's metrics object
-    this.metrics.filesCount.set(Blocks)
-    this.metrics.totalFilesSize.set(Size)
     this.metrics.peerCount.set({ type: 'discovered' }, Object.keys(discoveredPeers.Addrs).length)
     this.metrics.peerCount.set({ type: 'connected' }, connectedPeers.Peers?.length || 0)
+    // ls can return null e.g. entries can be null
+    this.metrics.filesCount.set(files || [].length)
+    const size = files || [].reduce((out, acc) => (out = out + acc.Size), 0)
+    this.metrics.totalFilesSize.set(size)
   }
 
   // starts the generator resolving after the first update
