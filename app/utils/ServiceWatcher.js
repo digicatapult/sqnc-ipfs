@@ -16,6 +16,23 @@ class ServiceWatcher {
     this.#timeout = env.HEALTHCHECK_TIMEOUT_MS
     this.services = this.#init(apis)
     this.metrics = {
+      // TODO abstract into a method this.#initCustoMetrics with the last one
+      filesCount: () => {
+        if (!this.metrics.filesCount) {
+          return new client.Gauge({
+            name: 'dscp_ipfs_files_count',
+            help: 'a number of files (blocks)',
+          })
+        }
+      },
+      totalFilesSize: () => {
+        if (!this.metrics.totalFilesSize) {
+          return new client.Gauge({
+            name: 'dscp_ipfs_total_files_size',
+            help: 'a total number of storage used in bytes? TODO confim',
+          })
+        }
+      },
       peerCount: () => {
         if (!this.metrics.peerCount) {
           return new client.Gauge({
@@ -60,6 +77,10 @@ class ServiceWatcher {
   }
 
   async #updateMetrics() {
+    const { data: { Blocks, Size } } = await axios({
+      url: `${this.ipfsApiUrl}files/stat`,
+      method: 'POST',
+    })
     const { data: connectedPeers } = await axios({
       url: `${this.ipfsApiUrl}swarm/peers`,
       method: 'POST',
@@ -70,6 +91,8 @@ class ServiceWatcher {
     })
 
     // update instance's metrics object
+    this.metrics.filesCount.set(Blocks)
+    this.metrics.totalFilesSize.set(Size)
     this.metrics.peerCount.set({ type: 'discovered' }, Object.keys(discoveredPeers.Addrs).length)
     this.metrics.peerCount.set({ type: 'connected' }, connectedPeers.Peers?.length || 0)
   }
