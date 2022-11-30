@@ -10,6 +10,7 @@ class ServiceWatcher {
 
   // TODO add a method for updating this.services
   constructor(apis) {
+    client.register.clear()
     this.report = {}
     this.#pollPeriod = env.HEALTHCHECK_POLL_PERIOD_MS
     this.ipfsApiUrl = `http://${env.IPFS_API_HOST}:${env.IPFS_API_PORT}/api/v0/`
@@ -50,7 +51,6 @@ class ServiceWatcher {
 
   // organize services and store in this.services
   #init(services) {
-    client.register.clear()
     return Object.keys(services)
       .map((service) => {
         const { healthCheck, ...api } = services[service]
