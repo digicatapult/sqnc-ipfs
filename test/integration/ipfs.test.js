@@ -11,7 +11,7 @@ import { setupIPFS, waitForIpfsApi } from './helper/ipfs.js'
 const uploadA = async (fileName, contents) => {
   const form = new FormData()
   form.append('file', new Blob([contents]), fileName)
-  const body = await fetch(`http://localhost:${env.IPFS_API_PORT}/api/v0/add?cid-version=0`, {
+  const body = await fetch(`http://127.0.0.1:${env.IPFS_API_PORT}/api/v0/add?cid-version=0`, {
     method: 'POST',
     body: form,
   })
@@ -25,7 +25,7 @@ const download = (port) => async (hash) => {
     controller.abort()
   }, 500)
 
-  const contentBody = await fetch(`http://localhost:${port}/api/v0/cat?arg=${hash}`, {
+  const contentBody = await fetch(`http://127.0.0.1:${port}/api/v0/cat?arg=${hash}`, {
     method: 'POST',
     signal: controller.signal,
   })
@@ -45,7 +45,7 @@ const setupIpfsWithSwarm = async (context) => {
 }
 
 describe('ipfs', function () {
-  describe.only('read a file uploaded to node A from node A', function () {
+  describe('read a file uploaded to node A from node A', function () {
     const context = {}
 
     before(async function () {

@@ -4,7 +4,6 @@ import os from 'os'
 import path from 'path'
 import fs from 'fs/promises'
 import { spawn, spawnSync } from 'child_process'
-import fetch from 'node-fetch'
 import delay from 'delay'
 import { fileURLToPath } from 'url'
 
@@ -16,7 +15,7 @@ const __dirname = path.dirname(__filename)
 export const waitForIpfsApi = async (port) => {
   for (let waitCount = 0; waitCount < 60; waitCount++) {
     try {
-      const fetchRes = await fetch(`http://localhost:${port}/api/v0/version`, { method: 'POST' })
+      const fetchRes = await fetch(`http://127.0.0.1:${port}/api/v0/version`, { method: 'POST' })
       if (fetchRes.status !== 200) {
         throw new Error()
       }
