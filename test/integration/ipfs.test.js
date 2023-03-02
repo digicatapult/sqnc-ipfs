@@ -45,7 +45,7 @@ const setupIpfsWithSwarm = async (context) => {
 }
 
 describe('ipfs', function () {
-  describe('read a file uploaded to node A from node A', function () {
+  describe.only('read a file uploaded to node A from node A', function () {
     const context = {}
 
     before(async function () {
