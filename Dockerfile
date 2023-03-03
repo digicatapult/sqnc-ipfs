@@ -23,7 +23,7 @@ EOF
 
 FROM node:$NODE_RUNTIME_IMAGE_VERSION AS runtime
 RUN apk add --no-cache curl
-RUN npm i -g npm@8.x.x
+RUN npm i -g npm@latest
 
 ARG LOGLEVEL
 ENV NPM_CONFIG_LOGLEVEL ${LOGLEVEL}

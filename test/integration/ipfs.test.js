@@ -1,4 +1,3 @@
-import fetch from 'node-fetch'
 import { FormData, Blob } from 'formdata-node'
 
 import { expect } from 'chai'
@@ -41,7 +40,7 @@ const setupIpfsWithSwarm = async (context) => {
     context.swarmKey = await getSwarmKey()
   })
 
-  setupIPFS(context)
+  setupIPFS(context, 1)
 }
 
 describe('ipfs', function () {
@@ -84,7 +83,7 @@ describe('ipfs', function () {
       swarmKey: Buffer.from(new Array(32).fill(42)),
     }
 
-    setupIPFS(context)
+    setupIPFS(context, 0)
 
     before(async function () {
       context.hash = await uploadA('test-file-3.txt', 'Test 3')
@@ -108,13 +107,13 @@ describe('ipfs', function () {
       swarmKey: Buffer.from(new Array(32).fill(null).map(() => Math.floor(256 * Math.random()))),
     }
 
-    setupIPFS(context)
+    setupIPFS(context, 0)
 
     before(async function () {
       context.hash = await uploadA('test-file-4.txt', 'Test 4')
       await setSwarmKey(context.swarmKey)
       await delay(500)
-      await waitForIpfsApi(env.IPFS_API_PORT)
+      await waitForIpfsApi(env.IPFS_API_PORT, 1)
     })
 
     it('should be retrievable', async function () {
