@@ -24,6 +24,8 @@ rm -rf $SRC_DIR
 EOF
 
 FROM node:$NODE_RUNTIME_IMAGE_VERSION AS runtime
+ARG TARGETPLATFORM
+RUN if [ "$TARGETPLATFORM" = "linux/arm64" ]; then apk add --no-cache python3 make g++; fi
 RUN apk add --no-cache curl
 RUN npm i -g npm@latest
 
