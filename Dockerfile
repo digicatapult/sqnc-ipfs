@@ -1,10 +1,12 @@
 # syntax=docker/dockerfile:1.5
 
-ARG IPFS_BUILD_IMAGE_VERSION=1.18-alpine3.17
-ARG NODE_RUNTIME_IMAGE_VERSION=18-alpine3.17
+ARG IPFS_BUILD_IMAGE_VERSION=1.19-alpine3.17
+ARG NODE_RUNTIME_IMAGE_VERSION=lts-alpine3.17
 FROM golang:$IPFS_BUILD_IMAGE_VERSION AS ipfs_build
 
 ENV SRC_DIR /go/src/github.com/ipfs/go-ipfs
+ARG TARGETPLATFORM
+RUN if [ "$TARGETPLATFORM" = "linux/arm64" ]; then apk add --no-cache binutils-gold; fi
 
 RUN apk add --no-cache git make bash gcc musl-dev
 
