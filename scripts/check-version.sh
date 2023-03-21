@@ -4,8 +4,8 @@
 set -e
 
 function check_versions_consistent () {
-  local PACKAGE_VERSION=$(yq eval '.version' ./package.json)
-  local PACKAGE_LOCK_VERSION=$(yq eval '.version' ./package-lock.json)
+  local PACKAGE_VERSION=$(yq eval -o y '.version' ./package.json)
+  local PACKAGE_LOCK_VERSION=$(yq eval -o y '.version' ./package-lock.json)
 
   if [ "$PACKAGE_VERSION" != "$PACKAGE_LOCK_VERSION" ]; then
     echo "Inconsistent versions detected"
@@ -52,17 +52,6 @@ if check_version_greater "$CURRENT_VERSION" "$PUBLISHED_VERSIONS"; then
   else
     echo "IS_PRERELEASE=false" >> $GITHUB_OUTPUT
     echo "NPM_RELEASE_TAG=latest" >> $GITHUB_OUTPUT
-  fi
-  echo $CURRENT_VERSION
-  echo "VERSION=v$CURRENT_VERSION"
-  echo "BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
-  echo "IS_NEW_VERSION=true"
-  if [[ $CURRENT_VERSION =~ [-] ]]; then
-    echo "IS_PRERELEASE=true"
-    echo "NPM_RELEASE_TAG=next"
-  else
-    echo "IS_PRERELEASE=false"
-    echo "NPM_RELEASE_TAG=latest"
   fi
 else
   echo "IS_NEW_VERSION=false" >> $GITHUB_OUTPUT
