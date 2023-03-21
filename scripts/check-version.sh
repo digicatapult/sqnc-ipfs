@@ -53,6 +53,7 @@ if check_version_greater "$CURRENT_VERSION" "$PUBLISHED_VERSIONS"; then
     echo "IS_PRERELEASE=false" >> $GITHUB_OUTPUT
     echo "NPM_RELEASE_TAG=latest" >> $GITHUB_OUTPUT
   fi
+  echo $CURRENT_VERSION
   echo "VERSION=v$CURRENT_VERSION"
   echo "BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
   echo "IS_NEW_VERSION=true"
