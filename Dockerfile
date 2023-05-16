@@ -1,8 +1,6 @@
 # syntax=docker/dockerfile:1.5
 
-ARG IPFS_BUILD_IMAGE_VERSION=1.19-alpine3.17
-ARG NODE_RUNTIME_IMAGE_VERSION=lts-alpine3.17
-FROM golang:$IPFS_BUILD_IMAGE_VERSION AS ipfs_build
+FROM golang:1.19-alpine3.17 AS ipfs_build
 
 ENV SRC_DIR /go/src/github.com/ipfs/go-ipfs
 ARG TARGETPLATFORM
@@ -12,7 +10,7 @@ RUN apk add --no-cache git make bash gcc musl-dev
 
 WORKDIR /target
 
-ARG IPFS_TAG="v0.18.1"
+ARG IPFS_TAG="v0.20.0"
 
 RUN <<EOF
 set -ex
@@ -23,7 +21,7 @@ cp $SRC_DIR/cmd/ipfs/ipfs /target/ipfs
 rm -rf $SRC_DIR
 EOF
 
-FROM node:$NODE_RUNTIME_IMAGE_VERSION AS runtime
+FROM node:lts-alpine3.17 AS runtime
 ARG TARGETPLATFORM
 RUN if [ "$TARGETPLATFORM" = "linux/arm64" ]; then apk add --no-cache python3 make g++; fi
 RUN apk add --no-cache curl
