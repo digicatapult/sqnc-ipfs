@@ -12,7 +12,7 @@ RUN apk add --no-cache git make bash gcc musl-dev
 
 WORKDIR /target
 
-ARG IPFS_TAG="v0.18.1"
+ARG IPFS_TAG="v0.20.0"
 
 RUN <<EOF
 set -ex
