@@ -1,6 +1,6 @@
 {
   "name": "@digicatapult/dscp-ipfs",
-  "version": "2.9.41",
+  "version": "2.9.42",
   "description": "Service for DSCP",
   "main": "app/index.js",
   "type": "module",
@@ -32,7 +32,7 @@
   },
   "homepage": "https://github.com/digicatapult/dscp-ipfs#readme",
   "dependencies": {
-    "@polkadot/api": "^10.7.2",
+    "@polkadot/api": "^10.7.3",
     "axios": "^1.4.0",
     "dotenv": "^16.0.3",
     "envalid": "^7.3.1",
