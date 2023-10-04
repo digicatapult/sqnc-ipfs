@@ -1,6 +1,6 @@
 {
   "name": "@digicatapult/dscp-ipfs",
-  "version": "2.9.60",
+  "version": "2.9.61",
   "description": "IPFS node for use in DSCP",
   "main": "app/index.js",
   "type": "module",
@@ -38,7 +38,7 @@
     "envalid": "^7.3.1",
     "express": "^4.18.2",
     "express-prom-bundle": "^6.6.0",
-    "pino": "^8.15.1",
+    "pino": "^8.15.2",
     "pino-http": "^8.5.0",
     "prom-client": "^14.2.0"
   },
