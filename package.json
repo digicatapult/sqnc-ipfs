@@ -1,6 +1,6 @@
 {
   "name": "@digicatapult/dscp-ipfs",
-  "version": "2.9.68",
+  "version": "2.9.69",
   "description": "IPFS node for use in DSCP",
   "main": "app/index.js",
   "type": "module",
@@ -50,7 +50,7 @@
     "depcheck": "^1.4.6",
     "eslint": "^8.51.0",
     "eslint-config-prettier": "^9.0.0",
-    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-prettier": "^5.0.1",
     "formdata-node": "^5.0.1",
     "go-ipfs": "^0.22.0",
     "mocha": "^10.2.0",
