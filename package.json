@@ -1,6 +1,6 @@
 {
   "name": "@digicatapult/dscp-ipfs",
-  "version": "2.9.100",
+  "version": "2.9.101",
   "description": "IPFS node for use in DSCP",
   "main": "app/index.js",
   "type": "module",
