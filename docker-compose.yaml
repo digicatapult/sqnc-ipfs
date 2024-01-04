@@ -1,11 +1,10 @@
 version: '3'
 services:
   dscp-node:
-    image: digicatapult/dscp-node:latest
-    command:
+    image: digicatapult/dscp-node:v10.0.0-chore_upgrade-deps
+    command: |
       --base-path /data/
       --dev
-      --unsafe-ws-external
       --unsafe-rpc-external
       --rpc-cors all
     ports:
