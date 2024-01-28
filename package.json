@@ -1,6 +1,6 @@
 {
   "name": "@digicatapult/dscp-ipfs",
-  "version": "2.9.115",
+  "version": "2.9.116",
   "description": "IPFS node for use in DSCP",
   "main": "app/index.js",
   "type": "module",
@@ -45,7 +45,7 @@
   "devDependencies": {
     "@babel/eslint-parser": "^7.23.3",
     "c8": "^9.1.0",
-    "chai": "^5.0.0",
+    "chai": "^5.0.3",
     "delay": "^6.0.0",
     "depcheck": "^1.4.7",
     "eslint": "^8.56.0",
