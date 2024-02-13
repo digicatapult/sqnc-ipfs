@@ -1,7 +1,7 @@
 {
-  "name": "@digicatapult/dscp-ipfs",
+  "name": "@digicatapult/sqnc-ipfs",
   "version": "2.9.120",
-  "description": "IPFS node for use in DSCP",
+  "description": "IPFS node for use in SQNC",
   "main": "app/index.js",
   "type": "module",
   "scripts": {
@@ -16,21 +16,21 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/digicatapult/dscp-ipfs.git"
+    "url": "git+https://github.com/digicatapult/sqnc-ipfs.git"
   },
   "engines": {
     "node": ">=18.x.x",
     "npm": ">=9.x.x"
   },
   "keywords": [
-    "DSCP"
+    "SQNC"
   ],
   "author": "Digital Catapult",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/digicatapult/dscp-ipfs/issues"
+    "url": "https://github.com/digicatapult/sqnc-ipfs/issues"
   },
-  "homepage": "https://github.com/digicatapult/dscp-ipfs#readme",
+  "homepage": "https://github.com/digicatapult/sqnc-ipfs#readme",
   "dependencies": {
     "@polkadot/api": "^10.11.2",
     "axios": "^1.6.7",

@@ -26,8 +26,8 @@ export default {
     },
     get runtimeVersion() {
       return {
-        specName: 'dscp-node',
-        implName: 'dscp-node',
+        specName: 'sqnc-node',
+        implName: 'sqnc-node',
         authoringVersion: 1,
         specVersion: 300,
         implVersion: 1,

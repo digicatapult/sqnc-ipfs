@@ -11,7 +11,7 @@ const __dirname = path.dirname(__filename)
 /* istanbul ignore else */
 if (process.env.NODE_ENV === 'test') {
   dotenv.config({ path: 'test/test.env' })
-  const ipfsDir = fsWithSync.mkdtempSync(path.join(os.tmpdir(), 'dscp-ipfs-'))
+  const ipfsDir = fsWithSync.mkdtempSync(path.join(os.tmpdir(), 'sqnc-ipfs-'))
   process.env.IPFS_PATH = ipfsDir
 }
 
@@ -26,7 +26,7 @@ const validateArgs = envalid.makeValidator((input) => {
 const vars = envalid.cleanEnv(
   process.env,
   {
-    SERVICE_TYPE: envalid.str({ default: 'dscp-ipfs'.toUpperCase().replace(/-/g, '_') }),
+    SERVICE_TYPE: envalid.str({ default: 'sqnc-ipfs'.toUpperCase().replace(/-/g, '_') }),
     LOG_LEVEL: envalid.str({ default: 'info', devDefault: 'debug' }),
     PORT: envalid.port({ default: 80, devDefault: 3000 }),
     NODE_HOST: envalid.host({ devDefault: 'localhost' }),

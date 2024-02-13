@@ -39,7 +39,7 @@ export const waitForIpfsApi = async (port, peerCount) => {
 
 export const setupIPFS = (context, peerCount) => {
   before(async function () {
-    context.ipfsDir = await fs.mkdtemp(path.join(os.tmpdir(), 'dscp-ipfs-'))
+    context.ipfsDir = await fs.mkdtemp(path.join(os.tmpdir(), 'sqnc-ipfs-'))
 
     spawnSync(env.IPFS_EXECUTABLE, ['init'], {
       env: {

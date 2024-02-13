@@ -19,7 +19,7 @@ class ServiceWatcher {
       peerCount: () => {
         if (!this.metrics.peerCount) {
           return new client.Gauge({
-            name: 'dscp_ipfs_swarm_peer_count',
+            name: 'sqnc_ipfs_swarm_peer_count',
             help: 'a number of discovered and connected peers',
             labelNames: ['type'],
           })

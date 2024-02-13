@@ -32,7 +32,7 @@ ENV NPM_CONFIG_LOGLEVEL ${LOGLEVEL}
 
 COPY --from=ipfs_build /target /usr/local/bin
 
-WORKDIR /dscp-ipfs
+WORKDIR /sqnc-ipfs
 
 # Install base dependencies
 COPY . .
