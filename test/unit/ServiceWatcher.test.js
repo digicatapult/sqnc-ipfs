@@ -215,7 +215,7 @@ describe('ServiceWatcher', function () {
             details: {
               chain: 'Test',
               runtime: {
-                name: 'dscp-node',
+                name: 'sqnc-node',
                 versions: {
                   authoring: 1,
                   impl: 1,
@@ -269,7 +269,7 @@ describe('ServiceWatcher', function () {
           details: {
             chain: 'Test',
             runtime: {
-              name: 'dscp-node',
+              name: 'sqnc-node',
               versions: {
                 authoring: 1,
                 impl: 1,
