@@ -1,6 +1,6 @@
 {
   "name": "@digicatapult/sqnc-ipfs",
-  "version": "2.10.3",
+  "version": "2.10.4",
   "description": "IPFS node for use in SQNC",
   "main": "app/index.js",
   "type": "module",
@@ -54,7 +54,7 @@
     "formdata-node": "^6.0.3",
     "go-ipfs": "^0.22.0",
     "mocha": "^10.3.0",
-    "nodemon": "^3.0.3",
+    "nodemon": "^3.1.0",
     "pino-colada": "^2.2.2",
     "prettier": "^3.2.5",
     "sinon": "^17.0.1"
