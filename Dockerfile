@@ -1,6 +1,6 @@
-# syntax=docker/dockerfile:1.5
+# syntax=docker/dockerfile:1.6
 
-FROM golang:1.19-alpine3.17 AS ipfs_build
+FROM golang:1.21-alpine3.17 AS ipfs_build
 
 ENV SRC_DIR /go/src/github.com/ipfs/go-ipfs
 ARG TARGETPLATFORM
