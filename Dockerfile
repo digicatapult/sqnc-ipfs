@@ -1,8 +1,8 @@
-# syntax=docker/dockerfile:1.5
+# syntax=docker/dockerfile:1.6
 
-FROM golang:1.19-alpine3.17 AS ipfs_build
+FROM golang:1.21-alpine3.17 AS ipfs_build
 
-ENV SRC_DIR /go/src/github.com/ipfs/go-ipfs
+ENV SRC_DIR /go/src/github.com/ipfs/kubo
 ARG TARGETPLATFORM
 RUN if [ "$TARGETPLATFORM" = "linux/arm64" ]; then apk add --no-cache binutils-gold; fi
 
@@ -10,11 +10,11 @@ RUN apk add --no-cache git make bash gcc musl-dev
 
 WORKDIR /target
 
-ARG IPFS_TAG="v0.20.0"
+ARG IPFS_TAG="v0.26.0"
 
 RUN <<EOF
 set -ex
-git clone --branch $IPFS_TAG https://github.com/ipfs/go-ipfs.git $SRC_DIR
+git clone --branch $IPFS_TAG https://github.com/ipfs/kubo.git $SRC_DIR
 cd $SRC_DIR
 make build
 cp $SRC_DIR/cmd/ipfs/ipfs /target/ipfs
