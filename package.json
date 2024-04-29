@@ -1,6 +1,6 @@
 {
   "name": "@digicatapult/sqnc-ipfs",
-  "version": "2.10.23",
+  "version": "2.10.24",
   "description": "IPFS node for use in SQNC",
   "main": "app/index.js",
   "type": "module",
@@ -38,7 +38,7 @@
     "envalid": "^8.0.0",
     "express": "^4.19.2",
     "express-prom-bundle": "^7.0.0",
-    "pino": "^8.21.0",
+    "pino": "^9.0.0",
     "pino-http": "^9.0.0",
     "prom-client": "^15.1.2"
   },
