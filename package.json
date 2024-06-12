@@ -1,6 +1,6 @@
 {
   "name": "@digicatapult/sqnc-ipfs",
-  "version": "2.10.38",
+  "version": "2.10.39",
   "description": "IPFS node for use in SQNC",
   "main": "app/index.js",
   "type": "module",
@@ -44,7 +44,7 @@
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.24.7",
-    "c8": "^9.1.0",
+    "c8": "^10.1.1",
     "chai": "^5.1.1",
     "delay": "^6.0.0",
     "depcheck": "^1.4.7",
