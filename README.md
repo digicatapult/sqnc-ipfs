@@ -7,9 +7,9 @@ Manages a go-ipfs instance maintaining the private network swarm key based on th
 ```sh
 npm i
 ```
-> start substrate node using docker-compose
+> start substrate node
 ```sh
-docker-compose up -d // -d for silent
+docker compose up -d // -d for silent
 ```
 > start ipfs nodejs wrapper
 ```sh
