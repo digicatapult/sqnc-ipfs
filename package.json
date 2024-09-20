@@ -1,6 +1,6 @@
 {
   "name": "@digicatapult/sqnc-ipfs",
-  "version": "2.10.74",
+  "version": "2.10.75",
   "description": "IPFS node for use in SQNC",
   "main": "app/index.js",
   "type": "module",
@@ -48,13 +48,13 @@
     "chai": "^5.1.1",
     "delay": "^6.0.0",
     "depcheck": "^1.4.7",
-    "eslint": "^8.57.0",
+    "eslint": "^8.57.1",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
     "formdata-node": "^6.0.3",
     "kubo": "^0.30.0",
     "mocha": "^10.7.3",
-    "nodemon": "^3.1.4",
+    "nodemon": "^3.1.5",
     "pino-colada": "^2.2.2",
     "prettier": "^3.3.3",
     "sinon": "^19.0.2"
