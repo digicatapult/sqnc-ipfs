@@ -29,6 +29,7 @@ export const waitForIpfsApi = async (port, peerCount) => {
       if (peers !== null && peers.length >= peerCount) {
         return
       }
+      // eslint-disable-next-line no-unused-vars
     } catch (err) {
       /* empty */
     } finally {

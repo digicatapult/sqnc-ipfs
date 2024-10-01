@@ -51,7 +51,7 @@ describe('ServiceWatcher', function () {
       })
 
       invalidTypes.forEach((type) => {
-        const typeText = type instanceof Array ? 'array' : null || typeof type
+        const typeText = type instanceof Array ? 'array' : typeof type
         it(`also if first arguments is of a type: ${typeText}`, () => {
           SW.update(type)
           expect(SW.report).to.deep.equals({})
