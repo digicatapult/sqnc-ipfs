@@ -120,7 +120,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-
+      - name: Get Kubo Version
+        id: kubo_version
+        run: |
+          echo "IPFS_TAG=v$(jq .devDependencies.kubo ./package.json | sed 's/[\^"]//g')" >> $GITHUB_OUTPUT
       # Docker build
       - name: Setup QEMU
         uses: docker/setup-qemu-action@v3
@@ -139,3 +142,6 @@ jobs:
           context: .
           file: ./Dockerfile
           platforms: linux/amd64, linux/arm64
+          build-args: |
+            IPFS_TAG=${{ steps.kubo_version.outputs.IPFS_TAG }}
+            

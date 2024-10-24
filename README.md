@@ -1,6 +1,6 @@
 # sqnc-ipfs
 
-Manages a go-ipfs instance maintaining the private network swarm key based on the value from a `sqnc-node` instance.
+Manages a [kubo](https://docs.ipfs.tech/install/command-line/) instance maintaining the private network swarm key based on the value from a `sqnc-node` instance.
 
 ## Local development
 > install dependencies
@@ -31,3 +31,11 @@ npm run dev
 | IPFS_EXECUTABLE               |    N     |    `ipfs`    | Executable to use to run go-ipfs                                                     |
 | IPFS_ARGS                     |    N     | `["daemon"]` | JSON array of strings to pass as arguments to the `IPFS_EXECUTABLE`                  |
 | IPFS_LOG_LEVEL                |    N     |    `info`    | Log level of the go-ipfs child process                                               |
+
+## Docker build
+
+`sqnc-ipfs` can be built into a docker container. There is a required build argument for this `IPFS_TAG` which specifies what version of `kubo` should be built into `sqnc-ipfs`. The container can therefore be built using:
+
+```sh
+docker build --build-arg IPFS_TAG="v0.31.0" .
+```
