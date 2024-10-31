@@ -1,4 +1,4 @@
-# syntax=docker/dockerfile:1.10
+# syntax=docker/dockerfile:1.11
 
 FROM golang:1.23-alpine3.19 AS ipfs_build
 

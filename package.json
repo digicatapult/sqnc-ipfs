@@ -1,6 +1,6 @@
 {
   "name": "@digicatapult/sqnc-ipfs",
-  "version": "2.10.92",
+  "version": "2.10.93",
   "description": "IPFS node for use in SQNC",
   "main": "app/index.js",
   "type": "module",
