@@ -1,6 +1,6 @@
 {
   "name": "@digicatapult/sqnc-ipfs",
-  "version": "2.10.104",
+  "version": "2.10.105",
   "description": "IPFS node for use in SQNC",
   "main": "app/index.js",
   "type": "module",
@@ -33,10 +33,10 @@
   "homepage": "https://github.com/digicatapult/sqnc-ipfs#readme",
   "dependencies": {
     "@polkadot/api": "^15.0.1",
-    "axios": "^1.7.8",
+    "axios": "^1.7.9",
     "dotenv": "^16.4.7",
     "envalid": "^8.0.0",
-    "express": "^4.21.1",
+    "express": "^4.21.2",
     "express-prom-bundle": "^8.0.0",
     "pino": "^9.5.0",
     "pino-http": "^10.3.0",
@@ -59,7 +59,7 @@
     "mocha": "^11.0.1",
     "nodemon": "^3.1.7",
     "pino-colada": "^2.2.2",
-    "prettier": "^3.4.1",
+    "prettier": "^3.4.2",
     "sinon": "^19.0.2"
   }
 }
