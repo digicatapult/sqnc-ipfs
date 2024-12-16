@@ -1,6 +1,6 @@
 {
   "name": "@digicatapult/sqnc-ipfs",
-  "version": "2.10.106",
+  "version": "2.10.107",
   "description": "IPFS node for use in SQNC",
   "main": "app/index.js",
   "type": "module",
@@ -57,7 +57,7 @@
     "kubo": "^0.32.1",
     "globals": "^15.13.0",
     "mocha": "^11.0.1",
-    "nodemon": "^3.1.7",
+    "nodemon": "^3.1.9",
     "pino-colada": "^2.2.2",
     "prettier": "^3.4.2",
     "sinon": "^19.0.2"
