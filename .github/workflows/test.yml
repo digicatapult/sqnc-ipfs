@@ -1,7 +1,7 @@
-name: Release (NPM)
+name: Test (NPM)
 on:
   push:
-    branches: ['main']
+    branches-ignore: ['main']
 jobs:
   static-checks-npm:
     uses: digicatapult/shared-workflows/.github/workflows/static-checks-npm.yml@main
@@ -22,23 +22,12 @@ jobs:
         run: |
           echo "IPFS_TAG=v$(jq .devDependencies.kubo ./package.json | sed 's/[\^"]//g')" >> $GITHUB_OUTPUT
   build-docker:
-    needs: [tests, static-checks-npm, kubo-version]
     uses: digicatapult/shared-workflows/.github/workflows/build-docker.yml@main
-    with:
-      push_dockerhub: true
-      push_ghcr: true
-      build_args: |
-        IPFS_TAG=${{ needs.kubo-version.outputs.ipfs_tag }}
+    needs:
+      - kubo-version
     permissions:
       packages: write
       contents: write
-    secrets:
-      DOCKERHUB_TOKEN: ${{ secrets.SQNC_DOCKERHUB_TOKEN }}
-      DOCKERHUB_USERNAME: ${{ secrets.SQNC_DOCKERHUB_USERNAME }}
-  release-github:
-    needs: [build-docker]
-    uses: digicatapult/shared-workflows/.github/workflows/release-github.yml@main
-    permissions:
-      contents: write
-      pull-requests: read
-    secrets: inherit
+    with:
+      build_args: |
+        IPFS_TAG=${{ needs.kubo-version.outputs.ipfs_tag }}
