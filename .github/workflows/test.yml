@@ -11,8 +11,22 @@ jobs:
     uses: digicatapult/shared-workflows/.github/workflows/tests-npm.yml@main
     with:
       tests: '["test"]'
+  kubo-version:
+    runs-on: ubuntu-latest
+    outputs:
+      ipfs_tag: ${{ steps.kubo_version.outputs.IPFS_TAG }}
+    steps:
+      - name: Get Kubo Version
+        id: kubo_version
+        run: |
+          echo "IPFS_TAG=v$(jq .devDependencies.kubo ./package.json | sed 's/[\^"]//g')" >> $GITHUB_OUTPUT
   build-docker:
     uses: digicatapult/shared-workflows/.github/workflows/build-docker.yml@main
+    needs:
+      - kubo-version
     permissions:
       packages: write
       contents: write
+    with:
+      build_args: |
+        IPFS_TAG=${{ needs.kubo-version.outputs.ipfs_tag }}
