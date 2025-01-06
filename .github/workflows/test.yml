@@ -1,0 +1,18 @@
+name: Test (NPM)
+on:
+  push:
+    branches-ignore: ['main']
+jobs:
+  static-checks-npm:
+    uses: digicatapult/shared-workflows/.github/workflows/static-checks-npm.yml@main
+    with:
+      matrix_commands: '["lint", "depcheck"]'
+  tests:
+    uses: digicatapult/shared-workflows/.github/workflows/tests-npm.yml@main
+    with:
+      tests: '["test"]'
+  build-docker:
+    uses: digicatapult/shared-workflows/.github/workflows/build-docker.yml@main
+    permissions:
+      packages: write
+      contents: write
