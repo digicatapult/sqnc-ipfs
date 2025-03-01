@@ -1,6 +1,6 @@
 {
   "name": "@digicatapult/sqnc-ipfs",
-  "version": "3.0.14",
+  "version": "3.0.15",
   "description": "IPFS node for use in SQNC",
   "main": "app/index.js",
   "type": "module",
@@ -32,8 +32,8 @@
   },
   "homepage": "https://github.com/digicatapult/sqnc-ipfs#readme",
   "dependencies": {
-    "@polkadot/api": "^15.6.1",
-    "axios": "^1.7.9",
+    "@polkadot/api": "^15.7.1",
+    "axios": "^1.8.1",
     "dotenv": "^16.4.7",
     "envalid": "^8.0.0",
     "express": "^4.21.2",
@@ -51,7 +51,7 @@
     "delay": "^6.0.0",
     "depcheck": "^1.4.7",
     "eslint": "^9.21.0",
-    "eslint-config-prettier": "^10.0.1",
+    "eslint-config-prettier": "^10.0.2",
     "eslint-plugin-prettier": "^5.2.3",
     "formdata-node": "^6.0.3",
     "kubo": "^0.33.2",
