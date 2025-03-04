@@ -29,11 +29,10 @@ docker compose up -d // -d for silent
 run:
 
 ```sh
-# cd into where ipfs is
-cd node_modules/kubo/bin/ipfs
+mkdir data && cd data/
 # export it's path
 export IPFS_PATH=$PWD
-# cd to data folder (if this doesn't exist create it at root)
+# then init ipfs
 ../node_modules/kubo/bin/ipfs init
 # then cd back to root and continue
 ```
