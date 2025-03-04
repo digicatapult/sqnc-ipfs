@@ -1,6 +1,6 @@
 {
   "name": "@digicatapult/sqnc-ipfs",
-  "version": "3.0.15",
+  "version": "3.0.16",
   "description": "IPFS node for use in SQNC",
   "main": "app/index.js",
   "type": "module",
@@ -12,6 +12,7 @@
     "depcheck": "depcheck",
     "start": "node app/index.js",
     "dev": "NODE_ENV=dev nodemon app/index.js | pino-colada",
+    "dev:telemetry": "NODE_ENV=dev NODE_OPTIONS='--require @opentelemetry/auto-instrumentations-node/register' IPFS_TRACING=true IPFS_LOGGING=error GRPC_INSECURE=true OTEL_SERVICE_NAME='sqnc-ipfs' OTEL_EXPORTER_OTLP_TRACES_PROTOCOL='grpc' OTEL_EXPORTER_OTLP_TRACES_ENDPOINT='http://localhost:4317' OTEL_TRACES_EXPORTER='otlp' OTEL_PROPAGATORS='tracecontext,baggage' nodemon app/index.js | pino-colada",
     "coverage": "c8 npm run test"
   },
   "repository": {
@@ -32,6 +33,8 @@
   },
   "homepage": "https://github.com/digicatapult/sqnc-ipfs#readme",
   "dependencies": {
+    "@grpc/grpc-js": "^1.12.6",
+    "@opentelemetry/auto-instrumentations-node": "^0.56.1",
     "@polkadot/api": "^15.7.1",
     "axios": "^1.8.1",
     "dotenv": "^16.4.7",
@@ -54,8 +57,8 @@
     "eslint-config-prettier": "^10.0.2",
     "eslint-plugin-prettier": "^5.2.3",
     "formdata-node": "^6.0.3",
-    "kubo": "^0.33.2",
     "globals": "^16.0.0",
+    "kubo": "^0.33.2",
     "mocha": "^11.1.0",
     "nodemon": "^3.1.9",
     "pino-colada": "^2.2.2",
