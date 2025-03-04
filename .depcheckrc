@@ -1,1 +1,2 @@
-ignores: ["kubo"]
+ignores: ["kubo",'@grpc/grpc-js',
+  '@opentelemetry/auto-instrumentations-node']
