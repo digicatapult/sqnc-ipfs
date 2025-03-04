@@ -47,6 +47,14 @@ npm run dev
 
 ## To run with telemetry
 
+```sh
+npm i
+# start dependencies with
+docker-compose -f ./docker-compose.yml -f ./docker-compose.telemetry.yml up -d
+# run with telemetry
+npm run dev:telemetry
+```
+
 ## Environment Variables
 
 `sqnc-ipfs` is configured primarily using environment variables as follows:
