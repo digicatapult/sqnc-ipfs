@@ -1,17 +1,14 @@
 # syntax=docker/dockerfile:1.14
 
-FROM golang:1.23-alpine3.19 AS ipfs_build
+FROM golang:1.23-bookworm AS ipfs_build
 
 ENV SRC_DIR=/go/src/github.com/ipfs/kubo
 ARG TARGETPLATFORM
-RUN if [ "$TARGETPLATFORM" = "linux/arm64" ]; then apk add --no-cache binutils-gold; fi
-
-RUN apk add --no-cache git make bash gcc musl-dev
 
 WORKDIR /target
 
 ARG IPFS_TAG=NO_VALUE
-RUN [ ! "${IPFS_TAG}" == "NO_VALUE" ]
+RUN [ "$IPFS_TAG" != "NO_VALUE" ]
 
 RUN echo $IPFS_TAG
 
@@ -24,10 +21,8 @@ cp $SRC_DIR/cmd/ipfs/ipfs /target/ipfs
 rm -rf $SRC_DIR
 EOF
 
-FROM node:lts-alpine3.19 AS runtime
+FROM node:lts-bookworm AS runtime
 ARG TARGETPLATFORM
-RUN if [ "$TARGETPLATFORM" = "linux/arm64" ]; then apk add --no-cache python3 make g++; fi
-RUN apk add --no-cache curl
 RUN npm i -g npm@latest
 
 ARG LOGLEVEL
