@@ -18,6 +18,7 @@ git clone --branch "$IPFS_TAG" https://github.com/ipfs/kubo.git $SRC_DIR
 cd $SRC_DIR
 make build
 cp $SRC_DIR/cmd/ipfs/ipfs /target/ipfs
+rm -rf $SRC_DIR
 EOF
 
 FROM node:lts-bookworm AS runtime
