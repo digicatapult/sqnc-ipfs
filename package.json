@@ -1,6 +1,6 @@
 {
   "name": "@digicatapult/sqnc-ipfs",
-  "version": "3.0.43",
+  "version": "3.0.44",
   "description": "IPFS node for use in SQNC",
   "main": "app/index.js",
   "type": "module",
@@ -35,7 +35,7 @@
   "dependencies": {
     "@grpc/grpc-js": "^1.13.4",
     "@opentelemetry/auto-instrumentations-node": "^0.60.0",
-    "@polkadot/api": "^16.1.2",
+    "@polkadot/api": "^16.2.1",
     "axios": "^1.9.0",
     "dotenv": "^16.5.0",
     "envalid": "^8.0.0",
@@ -59,7 +59,7 @@
     "formdata-node": "^6.0.3",
     "globals": "^16.2.0",
     "kubo": "^0.35.0",
-    "mocha": "^11.5.0",
+    "mocha": "^11.6.0",
     "nodemon": "^3.1.10",
     "pino-colada": "^2.2.2",
     "prettier": "^3.5.3",
