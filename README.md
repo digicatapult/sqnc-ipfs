@@ -34,6 +34,9 @@ mkdir data && cd data/
 export IPFS_PATH=$PWD
 # then init ipfs
 ../node_modules/kubo/bin/ipfs init
+# set config
+../node_modules/kubo/bin/ipfs config --json AutoConf.Enabled false
+../node_modules/kubo/bin/ipfs config --json Bootstrap '[]'
 # then cd back to root and continue
 ```
 

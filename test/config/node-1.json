@@ -150,6 +150,9 @@
       "GracePeriod": "20s"
     }
   },
+  "AutoConf": {
+    "Enabled": false
+  },
   "AutoNAT": {},
   "Pubsub": {
     "Router": "",
