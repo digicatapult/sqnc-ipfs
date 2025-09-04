@@ -58,7 +58,7 @@
     "eslint-plugin-prettier": "^5.5.4",
     "formdata-node": "^6.0.3",
     "globals": "^16.3.0",
-    "kubo": "^0.37.0",
+    "kubo": "^0.36.0",
     "mocha": "^11.7.1",
     "nodemon": "^3.1.10",
     "pino-colada": "^2.2.2",
