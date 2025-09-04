@@ -85,7 +85,7 @@
     "RecordLifetime": "",
     "ResolveCacheSize": 128
   },
-  "Bootstrap": ["/ip4/127.0.0.1/tcp/4001/p2p/12D3KooWAivJWYbfAxnpQ1AL1o9yNowBJ4wMrMTtbw1bxnGjSYbj"],
+  "Bootstrap": [],
   "Gateway": {
     "HTTPHeaders": {
       "Access-Control-Allow-Headers": [
@@ -149,9 +149,6 @@
       "HighWater": 900,
       "GracePeriod": "20s"
     }
-  },
-  "AutoConf": {
-    "Enabled": false
   },
   "AutoNAT": {},
   "Pubsub": {
