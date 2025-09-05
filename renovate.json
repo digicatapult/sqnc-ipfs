@@ -1,4 +1,10 @@
 {
-	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
-	"extends": ["github>digicatapult/renovate-config"]
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["github>digicatapult/renovate-config"],
+  "packageRules": [
+    {
+      "matchPackageNames": ["kubo"],
+      "enabled": false
+    }
+  ]
 }
