@@ -1,6 +1,6 @@
 {
   "name": "@digicatapult/sqnc-ipfs",
-  "version": "3.0.81",
+  "version": "3.1.0",
   "description": "IPFS node for use in SQNC",
   "main": "app/index.js",
   "type": "module",
@@ -20,8 +20,8 @@
     "url": "git+https://github.com/digicatapult/sqnc-ipfs.git"
   },
   "engines": {
-    "node": "^22.x.x",
-    "npm": "^10.x.x"
+    "node": "24.x",
+    "npm": "11.x"
   },
   "keywords": [
     "SQNC"

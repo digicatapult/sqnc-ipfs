@@ -21,9 +21,8 @@ cp $SRC_DIR/cmd/ipfs/ipfs /target/ipfs
 rm -rf $SRC_DIR
 EOF
 
-FROM node:lts-bookworm AS runtime
+FROM node:24-bookworm AS runtime
 ARG TARGETPLATFORM
-RUN npm i -g npm@latest
 
 ARG LOGLEVEL
 ENV NPM_CONFIG_LOGLEVEL=${LOGLEVEL}
