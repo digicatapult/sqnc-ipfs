@@ -28,6 +28,8 @@ jobs:
     permissions:
       packages: write
       contents: write
+      security-events: write
+      actions: read
     with:
       build_args: |
         IPFS_TAG=${{ needs.kubo-version.outputs.ipfs_tag }}
