@@ -7,7 +7,7 @@ import { setupIPFS, waitForIpfsApi } from './helper/ipfs.js'
 
 const uploadA = async (fileName, contents) => {
   const form = new FormData()
-  form.append('file', new File([contents], fileName, { type: 'application/octet-stream' }))
+  form.append('file', new File([contents], fileName))
   const body = await fetch(`http://127.0.0.1:${env.IPFS_API_PORT}/api/v0/add?cid-version=0`, {
     method: 'POST',
     body: form,
