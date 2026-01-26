@@ -20,8 +20,8 @@
     "url": "git+https://github.com/digicatapult/sqnc-ipfs.git"
   },
   "engines": {
-    "node": "^22.x.x",
-    "npm": "^10.x.x"
+    "node": "^24.x.x",
+    "npm": "^11.x.x"
   },
   "keywords": [
     "SQNC"
