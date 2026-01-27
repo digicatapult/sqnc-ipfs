@@ -5,14 +5,19 @@ on:
 jobs:
   static-checks-npm:
     uses: digicatapult/shared-workflows/.github/workflows/static-checks-npm.yml@main
+    permissions:
+      security-events: write
     with:
       matrix_commands: '["lint", "depcheck"]'
   tests:
     uses: digicatapult/shared-workflows/.github/workflows/tests-npm.yml@main
+    permissions:
+      pull-requests: write
     with:
       tests: '["test"]'
   kubo-version:
     runs-on: ubuntu-latest
+    permissions: {}
     outputs:
       ipfs_tag: ${{ steps.kubo_version.outputs.IPFS_TAG }}
     steps:
@@ -24,16 +29,15 @@ jobs:
   build-docker:
     needs: [tests, static-checks-npm, kubo-version]
     uses: digicatapult/shared-workflows/.github/workflows/build-docker.yml@main
+    permissions:
+      contents: read
+      packages: write
+      security-events: write
     with:
       push_dockerhub: true
       push_ghcr: true
       build_args: |
         IPFS_TAG=${{ needs.kubo-version.outputs.ipfs_tag }}
-    permissions:
-      packages: write
-      contents: write
-      security-events: write
-      actions: read
     secrets:
       DOCKERHUB_TOKEN: ${{ secrets.SQNC_DOCKERHUB_TOKEN }}
       DOCKERHUB_USERNAME: ${{ secrets.SQNC_DOCKERHUB_USERNAME }}
