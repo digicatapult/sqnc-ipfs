@@ -156,7 +156,12 @@
     "DisableSigning": false
   },
   "Peering": {
-    "Peers": null
+    "Peers": [
+      {
+        "ID": "12D3KooWAivJWYbfAxnpQ1AL1o9yNowBJ4wMrMTtbw1bxnGjSYbj",
+        "Addrs": ["/ip4/127.0.0.1/tcp/4001"]
+      }
+    ]
   },
   "Provider": {
     "Strategy": ""
