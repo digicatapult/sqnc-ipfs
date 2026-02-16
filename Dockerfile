@@ -1,6 +1,6 @@
-# syntax=docker/dockerfile:1.19
+# syntax=docker/dockerfile:1.21
 
-FROM golang:1.25-bookworm AS ipfs_build
+FROM golang:1.26-bookworm AS ipfs_build
 
 ENV SRC_DIR=/go/src/github.com/ipfs/kubo
 ARG TARGETPLATFORM
