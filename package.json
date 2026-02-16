@@ -1,6 +1,6 @@
 {
   "name": "@digicatapult/sqnc-ipfs",
-  "version": "3.0.88",
+  "version": "3.0.89",
   "description": "IPFS node for use in SQNC",
   "main": "app/index.js",
   "type": "module",
@@ -37,11 +37,11 @@
     "@opentelemetry/auto-instrumentations-node": "^0.69.0",
     "@polkadot/api": "^16.5.4",
     "axios": "^1.13.5",
-    "dotenv": "^17.2.4",
+    "dotenv": "^17.3.1",
     "envalid": "^8.1.1",
     "express": "^5.2.1",
     "express-prom-bundle": "^8.0.0",
-    "pino": "^10.3.0",
+    "pino": "^10.3.1",
     "pino-http": "^11.0.0",
     "prom-client": "^15.1.3"
   },
