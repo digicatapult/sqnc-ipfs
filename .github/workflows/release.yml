@@ -21,7 +21,7 @@ jobs:
     outputs:
       ipfs_tag: ${{ steps.kubo_version.outputs.IPFS_TAG }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Get Kubo Version
         id: kubo_version
         run: |
