@@ -36,5 +36,6 @@ jobs:
       packages: write
       security-events: write
     with:
+      scan_container: true
       build_args: |
         IPFS_TAG=${{ needs.kubo-version.outputs.ipfs_tag }}
